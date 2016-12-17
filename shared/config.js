@@ -1,4 +1,4 @@
-let room = {
+let endpoints = {
     broadcast: 'broadcast player',
     gameUpdate: 'game update',
     getPlayerId: 'new player id'
@@ -6,5 +6,5 @@ let room = {
 
 var module = module || { exports: {} };
 module.exports = {
-    room
+    endpoints
 };

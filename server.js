@@ -1,16 +1,16 @@
 let express = require('express');
 let http = require('http');
 let io = require('socket.io');
-let config = require('./public/config.js');
-var Player = require('./public/player.js');
+let config = require('./shared/config.js');
+var Player = require('./shared/player.js');
 
 let app = express();
 let server = http.createServer(app);
 
-app.use(express.static('public'));
+app.use(express.static('shared'));
 io = io.listen(server);
 
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 8888);
 console.log('Server running...');
 
 app.get('/', (req, res) => {
@@ -35,7 +35,7 @@ io.sockets.on('connection', (socket) => {
     player.id = id;
     players[id] = player;
 
-    socket.emit(config.room.getPlayerId, players[id]);
+    socket.emit(config.endpoints.getPlayerId, players[id]);
 
     socket.on('disconnect', () => {
         console.log('Disconnected [%s]', online);
@@ -45,7 +45,7 @@ io.sockets.on('connection', (socket) => {
         delete players[id];
     });
 
-    socket.on(config.room.broadcast, ({ id, input }) => {
+    socket.on(config.endpoints.broadcast, ({ id, input }) => {
         if (players[id]) {
             players[id].input  = input;
         }
@@ -70,5 +70,5 @@ function updateGame() {
 
 setInterval(() => {
     updateGame();
-    io.sockets.emit(config.room.gameUpdate, { players });
+    io.sockets.emit(config.endpoints.gameUpdate, { players });
 }, 1000 / 30);
