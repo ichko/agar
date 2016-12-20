@@ -1,19 +1,22 @@
-class Player {
+module.exports = class Player {
 
-    constructor(name) {
-        this.id = undefined;
-        this.pos = {x: 0, y: 0};
-        this.size = Math.random() * 50 + 20;
+    constructor({
+        user = '<no_name>',
+        id = -1,
+        position = new Vector(),
+        size = 10,
+        color = '#f00'
+    }) {
+        this.name = name;
+        this.id = id;
+        this.position = position;
+        this.size = size;
+        this.color = color;
+        this.velocity = new Vector();
+    }
 
-        let colors = ['#44B3C2', '#F1A94E', '#E45641', '#5D4C46', '#FFD034', '#FF4C3B', '#0072BB'];
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.input = { up: false, down: false, left: false, right: false };
-
-        this.name = name || '';
-        this.onChange = (() => {});
+    updatePosition() {
+        this.position.add(this.velocity);
     }
 
 }
-
-var module = module || { exports: {} };
-module.exports = Player;

@@ -1,4 +1,4 @@
-class ClientGame {
+class Game {
 
     constructor(socket, renderer, ioEvents, endpoints) {
         this.endpoints = endpoints;
