@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Game :: Client</title>
+        <title>GAME ON</title>
     </head>
     <body>
         <style> * { overflow: hidden; margin: 0; } </style>
@@ -8,28 +8,8 @@
         <canvas id="canvas"></canvas>
 
         <script src="/socket.io/socket.io.js"></script>
-        <script src="/config.js"></script>
-        <script src="/player.js"></script>
-        <script src="/ioEvents.js"></script>
         <script src="/renderer.js"></script>
-        <script src="/clientGame.js"></script>
-
-        <script>
-
-            let canvas = document.getElementById('canvas');
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-            let ctx = canvas.getContext('2d');
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-
-            let socket = io.connect('http://localhost:8888');
-            let ioEvents = new IOEvents();
-            let renderer = new Renderer(ctx, canvas.width, canvas.height);
-            game = new ClientGame(socket, renderer, ioEvents, endpoints);
-
-            game.start();
-
-        </script>
+        <script src="/init.js"></script>
 
     </body>
 </html>

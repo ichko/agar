@@ -1,12 +1,12 @@
 let { Game } = require('./game');
 
-module.exports = function gameInit(io) {
+module.exports = function init(io) {
 
-    let fps = 30;
+    let fps = 45;
     let getId = (() => {
         let id = 0;
         return () => id++;
-    });
+    })();
 
     let game = new Game();
     let connections = { };
@@ -23,15 +23,20 @@ module.exports = function gameInit(io) {
             game.deletePlayer(id);
         });
 
-        socket.on('update.player', ({ input }) => {
+        socket.on('update.player', (input) => {
             game.updatePlayerVelocity(id, input.direction);
+        });
+
+        socket.on('request.game', (data) => {
+            game.newPlayer(id, data.name);
+            socket.emit('start.game', { id, data: game.getBroadcastData() });
         });
 
         console.log('id %s connected, currently %s online players', id, game.numberOfPlayers());
     });
 
     function updateGame() {
-        game.updatePlayersPositions();
+        game.update();
     }
 
     setInterval(() => {
