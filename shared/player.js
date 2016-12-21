@@ -5,6 +5,7 @@ function randomColor() {
                   'FFB85F', 'FF7A5A', '00AAA0', '8ED2C9', 'FF7182', '004040', '00FF00'];
     return '#' + colors[Math.floor(Math.random() * colors.length)];
 }
+module.exports.randomColor = randomColor;
 
 module.exports.Player = class {
 

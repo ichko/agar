@@ -1,5 +1,5 @@
 let { Vector } = require('../shared/vector');
-let { Player } = require('../shared/player');
+let { Player, randomColor } = require('../shared/player');
 
 
 module.exports.Game = class {
@@ -9,9 +9,25 @@ module.exports.Game = class {
         this.playersCnt = 0;
         this.size = { width, height };
 
+        this.foods = [];
+        this.foodsSize = 100;
+
         this.degradationRate = 0.01;
         this.playerMinSize = 10;
         this.playerMaxSize = 200;
+    }
+
+    generateFood() {
+        for (let i = 0;i < this.foodsSize - this.foods.length;i++) {
+            this.foods.push({
+                position: {
+                    x: Math.random() * this.size.width - this.size.width / 2,
+                    y: Math.random() * this.size.height - this.size.height / 2
+                },
+                size: 10,
+                color: randomColor()
+            });
+        }
     }
 
     numberOfPlayers() {
@@ -20,7 +36,8 @@ module.exports.Game = class {
 
     getBroadcastData() {
         return {
-            players: this.players
+            players: this.players,
+            foods: this.foods
         };
     }
 
@@ -30,7 +47,13 @@ module.exports.Game = class {
 
     newPlayer(id, name) {
         this.playersCnt++;
-        this.players[id] = new Player({ id, name });
+        this.players[id] = new Player({
+            id, name,
+            position: new Vector(
+                Math.random() * this.size.width - this.size.width / 2,
+                Math.random() * this.size.height - this.size.height / 2
+            )
+        });
     }
 
     deletePlayer(id) {
@@ -70,6 +93,20 @@ module.exports.Game = class {
         }
     }
 
+    resolveFoodCollisions() {
+        for (let name in this.players) {
+            let player = this.players[name];
+
+            this.foods.forEach((food, id) => {
+                let dist = player.position.distance(food.position);
+                if (dist < player.size + food.size) {
+                    player.size += food.size;
+                    this.foods.splice(id, 1);
+                }
+            });
+        }
+    }
+
     updatePlayersPositions() {
         for (let name in this.players) {
             this.players[name].updatePosition();
@@ -88,14 +125,23 @@ module.exports.Game = class {
     }
 
     update() {
+        this.generateFood();
+        this.updatePlayersPositions();
+        this.resolveCollisions();
+        this.resolveFoodCollisions();
+
         for (let name in this.players) {
             if (this.players[name].size > this.playerMinSize) {
                 this.players[name].size -= this.degradationRate;
             }
-        }
 
-        this.updatePlayersPositions();
-        this.resolveCollisions();
+            if (this.players[name].size > this.playerMaxSize) {
+                this.players[name].size = this.playerMaxSize;
+            }
+            if (this.players[name].size < this.playerMinSize) {
+                this.players[name].size = this.playerMinSize;
+            }
+        }
     }
 
 }

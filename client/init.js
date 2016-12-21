@@ -19,10 +19,12 @@ window.onload = () => {
 
     socket.on('start.game', ({ id, data }) => {
         let player = data.players[id];
+        let foods = data.foods;
 
         socket.on('update.game', (data) => {
             players = data.players;
             player = data.players[id];
+            foods = data.foods;
 
             delete players[id];
         });
@@ -37,7 +39,7 @@ window.onload = () => {
         window.setInterval(() => {
 
             renderer.clear();
-            renderer.render(players, player);
+            renderer.render(players, player, foods);
 
         }, 1000 / 45);
 

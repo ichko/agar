@@ -6,11 +6,12 @@ class Renderer {
         this.ctx = ctx;
     }
 
-    render(players, player) {
+    render(players, player, foods) {
         this.renderGrid(player.position);
         for (let id in players) {
             this.renderPlayer(players[id], player.position);
         }
+        foods.forEach(food => this.renderPlayer(food, player.position, false));
 
         this.renderPlayer(player, player.position);
     }
@@ -29,8 +30,12 @@ class Renderer {
         }
     }
 
-    renderPlayer(player, center) {
-        let text = player.name + '[' + parseInt(player.size * 10) + ']';
+    renderPlayer(player, center, renderText = true) {
+        let text = '';
+        if (renderText) {
+            text = player.name + ' [' + parseInt(player.size * 10) +
+            '], [' + (player.position.x / 350).toFixed(1) + ', ' + (player.position.y / 350).toFixed(1) + ']';
+        }
 
         this.ctx.beginPath();
         this.ctx.fillStyle = player.color;
