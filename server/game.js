@@ -4,13 +4,13 @@ let { Player, randomColor } = require('../shared/player');
 
 module.exports.Game = class {
 
-    constructor(width = 20000, height = 20000) {
+    constructor(width = 2000, height = 2000) {
         this.players = { };
         this.playersCnt = 0;
         this.size = { width, height };
 
         this.foods = [];
-        this.foodsSize = 100;
+        this.foodsSize = 50;
 
         this.degradationRate = 0.01;
         this.playerMinSize = 10;
@@ -100,7 +100,7 @@ module.exports.Game = class {
             this.foods.forEach((food, id) => {
                 let dist = player.position.distance(food.position);
                 if (dist < player.size + food.size) {
-                    player.size += food.size;
+                    player.size += food.size / 5;
                     this.foods.splice(id, 1);
                 }
             });

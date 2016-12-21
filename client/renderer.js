@@ -31,6 +31,11 @@ class Renderer {
     }
 
     renderPlayer(player, center, renderText = true) {
+        if (player.position.x - center.x > this.width / 2 || player.position.x - center.x < -this.width / 2 ||
+            player.position.y - center.y > this.height / 2 || player.position.y - center.y < -this.height / 2) {
+            return;
+        }
+
         let text = '';
         if (renderText) {
             text = player.name + ' [' + parseInt(player.size * 10) +

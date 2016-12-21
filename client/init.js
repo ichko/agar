@@ -1,9 +1,9 @@
 window.onload = () => {
 
-    // let server = window.prompt('Server', 'http://127.0.0.1:8888');
+    let server = window.prompt('Server', 'http://127.0.0.1:8888');
     let name = window.prompt('Name');
 
-    let server = 'http://78.90.132.183:8888/';
+    // let server = 'http://localhost:8888/';
     //let name = 'Pesho';
 
     let canvas = document.getElementById('canvas');
@@ -21,7 +21,7 @@ window.onload = () => {
         let player = data.players[id];
         let foods = data.foods;
 
-        socket.on('update.game', (data) => {
+        socket.on('update.game', data => {
             players = data.players;
             player = data.players[id];
             foods = data.foods;
