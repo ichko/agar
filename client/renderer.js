@@ -31,8 +31,8 @@ class Renderer {
     }
 
     renderPlayer(player, center, renderText = true) {
-        if (player.position.x - center.x > this.width / 2 || player.position.x - center.x < -this.width / 2 ||
-            player.position.y - center.y > this.height / 2 || player.position.y - center.y < -this.height / 2) {
+        if (player.position.x - center.x - player.size > this.width / 2 || player.position.x - center.x + player.size < -this.width / 2 ||
+            player.position.y - center.y - player.size > this.height / 2 || player.position.y - center.y + player.size < -this.height / 2) {
             return;
         }
 

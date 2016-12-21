@@ -4,17 +4,17 @@ let { Player, randomColor } = require('../shared/player');
 
 module.exports.Game = class {
 
-    constructor(width = 2000, height = 2000) {
+    constructor(width = 6000, height = 6000) {
         this.players = { };
         this.playersCnt = 0;
         this.size = { width, height };
 
         this.foods = [];
-        this.foodsSize = 50;
+        this.foodsSize = 300;
 
         this.degradationRate = 0.01;
         this.playerMinSize = 10;
-        this.playerMaxSize = 200;
+        this.playerMaxSize = 400;
     }
 
     generateFood() {
@@ -70,7 +70,7 @@ module.exports.Game = class {
             let dSize = this.playerMaxSize - this.playerMinSize;
             let playerDSize = this.players[id].size - this.playerMinSize;
             let lerp = 1 - playerDSize / dSize;
-            this.players[id].velocity.clamp(lerp * 4 + 2);
+            this.players[id].velocity.clamp(lerp * 6 + 3);
         }
     }
 

@@ -1,9 +1,9 @@
 window.onload = () => {
 
-    let server = window.prompt('Server', 'http://127.0.0.1:8888');
+    // let server = window.prompt('Server', 'http://78.90.132.183:8888/');
     let name = window.prompt('Name');
 
-    // let server = 'http://localhost:8888/';
+    let server = 'http://78.90.132.183:8888/';
     //let name = 'Pesho';
 
     let canvas = document.getElementById('canvas');
@@ -11,6 +11,7 @@ window.onload = () => {
     canvas.height = innerHeight;
     let ctx = canvas.getContext('2d');
     ctx.translate(canvas.width / 2, canvas.height / 2);
+
     let renderer = new Renderer(ctx, canvas.width, canvas.height);
 
     let socket = io.connect(server);
