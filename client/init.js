@@ -3,7 +3,7 @@ window.onload = () => {
     // let server = window.prompt('Server', 'http://78.90.132.183:8888/');
     let name = window.prompt('Name');
 
-    let server = 'http://78.90.132.183:8888/';
+    //let server = 'http://78.90.132.183:8888/';
     //let name = 'Pesho';
 
     let canvas = document.getElementById('canvas');
@@ -14,7 +14,7 @@ window.onload = () => {
 
     let renderer = new Renderer(ctx, canvas.width, canvas.height);
 
-    let socket = io.connect(server);
+    let socket = io.connect();
 
     socket.emit('request.game', { name });
 
