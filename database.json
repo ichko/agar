@@ -1,0 +1,10 @@
+{
+    "users": {
+        "zamunda": {
+            "password": "banana"
+        },
+        "habala": {
+            "password": "babala"
+        }
+    }
+}

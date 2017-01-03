@@ -1,11 +1,5 @@
 window.onload = () => {
 
-    // let server = window.prompt('Server', 'http://78.90.132.183:8888/');
-    let name = window.prompt('Name');
-
-    //let server = 'http://78.90.132.183:8888/';
-    //let name = 'Pesho';
-
     let canvas = document.getElementById('canvas');
     canvas.width = innerWidth;
     canvas.height = innerHeight;
@@ -13,12 +7,33 @@ window.onload = () => {
     ctx.translate(canvas.width / 2, canvas.height / 2);
 
     let renderer = new Renderer(ctx, canvas.width, canvas.height);
+    let socket = io.connect(window.location.href);
 
-    let socket = io.connect();
+    function modal(type, message) {
+        alert(type + ': ' + message);
+    }
 
-    socket.emit('request.game', { name });
+    function initGameUi() {
+        $('.form').hide();
+        $('.game').show();
+    }
 
-    socket.on('start.game', ({ id, data }) => {
+    $('#registration, #login').submit(function (e) {
+        e.preventDefault();
+        let user = {
+            username: $(this).find('.username').val(),
+            password: $(this).find('.password').val()
+        };
+
+        socket.emit(`request.${ $(this).attr('id') }`, user);
+    });
+
+    socket.on('register.error', ({ message }) => modal('Error', message));
+    socket.on('register.success', ({ message }) => modal('Success', message));
+    socket.on('login.error', ({ message }) => modal('Error', message));
+
+    socket.on('login.success', ({ id, data }) => {
+        initGameUi();
         let player = data.players[id];
         let foods = data.foods;
 

@@ -1,4 +1,8 @@
+var JsonDB = require('node-json-db');
+
 let { Game } = require('./game');
+let { UserRepository } = require('./userRepository');
+
 
 module.exports = function init(io) {
 
@@ -7,6 +11,9 @@ module.exports = function init(io) {
         let id = 0;
         return () => id++;
     })();
+
+    var db = new JsonDB("database", true, true);
+    let userRepository = new UserRepository(db);
 
     let game = new Game();
     let connections = { };
@@ -27,9 +34,23 @@ module.exports = function init(io) {
             game.updatePlayerVelocity(id, input.direction);
         });
 
-        socket.on('request.game', (data) => {
-            game.newPlayer(id, data.name);
-            socket.emit('start.game', { id, data: game.getBroadcastData() });
+        socket.on('request.login', (user) => {
+            if (userRepository.userExists(user)) {
+                game.newPlayer(id, user.username);
+                socket.emit('login.success', { id, data: game.getBroadcastData() });
+            } else {
+                socket.emit('login.error', { message: 'User is not registered' });
+            }
+        });
+
+
+        socket.on('request.registration', (user) => {
+            if (userRepository.userExists(user)) {
+                socket.emit('register.error', { message: 'User already registered' });
+            } else {
+                userRepository.addUser(user);
+                socket.emit('register.success', { message: 'Successful registration' });
+            }
         });
 
         console.log('id %s connected, currently %s online players', id, game.numberOfPlayers());

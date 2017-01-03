@@ -4,8 +4,9 @@
   "description": "Agar.io like game",
   "main": "server.js",
   "dependencies": {
-    "socket.io": "*",
-    "express": "*"
+    "express": "*",
+    "node-json-db": "^0.7.3",
+    "socket.io": "*"
   },
   "devDependencies": {},
   "scripts": {

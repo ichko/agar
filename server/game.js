@@ -6,7 +6,6 @@ module.exports.Game = class {
 
     constructor(width = 6000, height = 6000) {
         this.players = { };
-        this.playersCnt = 0;
         this.size = { width, height };
 
         this.foods = [];
@@ -31,7 +30,12 @@ module.exports.Game = class {
     }
 
     numberOfPlayers() {
-        return this.playersCnt;
+        let cnt = 0;
+        for (let name in this.players) {
+            cnt++;
+        }
+
+        return cnt;
     }
 
     getBroadcastData() {

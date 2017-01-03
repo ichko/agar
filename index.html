@@ -1,15 +1,49 @@
 <html>
-    <head>
-        <title>GAME ON</title>
-    </head>
-    <body>
-        <style> * { overflow: hidden; margin: 0; } </style>
+<head>
+    <title>GAME ON</title>
 
-        <canvas id="canvas"></canvas>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/renderer.js"></script>
-        <script src="/init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    </body>
+    <style>
+        .game { display: none; }
+    </style>
+
+</head>
+<body>
+
+<div class="form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form id="login" class="form-signin">
+                    <h2 class="form-signin-heading">Login</h2>
+                    <input type="text" class="form-control username" placeholder="Username" autofocus=""  required="">
+                    <input type="password" class="form-control password" placeholder="Password" required="">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form id="registration" class="form-signin">
+                    <h2 class="form-signin-heading">Register</h2>
+                    <input type="text" class="form-control username" placeholder="Username" required="">
+                    <input type="password" class="form-control password" placeholder="Password" required="">
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="game">
+    <canvas id="canvas"></canvas>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/renderer.js"></script>
+<script src="/init.js"></script>
+
+</body>
 </html>
