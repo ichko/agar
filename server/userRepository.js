@@ -1,7 +1,7 @@
 crypto = require('crypto');
 
 function hash(secret){
-    return crypto.createHmac('sha256')
+    return crypto.createHmac('sha256', 'key')
         .update(secret)
         .digest('base64');
 }
@@ -15,7 +15,7 @@ module.exports.UserRepository = class {
     userExists(user) {
         try {
             let { password } = this.db.getData(`/users/${ user.username }`);
-            return hash(password) == hash(user.password);
+            return password == hash(user.password);
         } catch (e) {
             return false;
         }
